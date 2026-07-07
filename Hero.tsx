@@ -104,6 +104,7 @@ export function Hero({
         Personal Portfolio / 2026
       </motion.p>
       <motion.div
+        className="hero-title-wrap"
         initial={{ opacity: 0, y: 32, rotateX: 14 }}
         animate={{ opacity: 1, y: 0, rotateX: 0 }}
         transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
@@ -119,14 +120,25 @@ export function Hero({
       <motion.div className="hero-statement" aria-label="能力关键词" variants={reveal} initial="hidden" animate="show" custom={0.6}>
         <span>AIGC｜工业设计｜UI / Web｜产品策略｜项目落地｜设计管理</span>
       </motion.div>
-      <motion.div className="profile-strip" variants={reveal} initial="hidden" animate="show" custom={0.74}>
-        {profileItems.map(([label, value]) => (
-          <div key={label}>
-            <span>{label}</span>
-            <strong>{value}</strong>
-          </div>
-        ))}
-      </motion.div>
+      <div className="hero-lower">
+        <motion.div className="hero-metric" variants={reveal} initial="hidden" animate="show" custom={0.68}>
+          <span className="metric-mark">///</span>
+          <strong>2026</strong>
+          <span>Portfolio system</span>
+        </motion.div>
+        <motion.div className="profile-strip" variants={reveal} initial="hidden" animate="show" custom={0.74}>
+          {profileItems.map(([label, value]) => (
+            <div key={label}>
+              <span>{label}</span>
+              <strong>{value}</strong>
+            </div>
+          ))}
+        </motion.div>
+        <motion.div className="hero-manifesto" variants={reveal} initial="hidden" animate="show" custom={0.86}>
+          <span>DESIGN IS NOT</span>
+          <strong>DECORATION</strong>
+        </motion.div>
+      </div>
       <motion.div className="hero-actions" variants={reveal} initial="hidden" animate="show" custom={1}>
         <a href="#works">查看作品</a>
         <a href="#contact">联系合作</a>
