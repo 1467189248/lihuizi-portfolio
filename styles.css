@@ -3715,6 +3715,7 @@ body[data-theme="light"] .gallery-card::before {
 }
 
 .vite-portfolio {
+  position: relative;
   width: 100%;
   max-width: none;
   margin: 0;
@@ -3733,8 +3734,52 @@ body[data-theme="light"] .vite-portfolio {
     #f5f5f7;
 }
 
+.post-hero-grainient {
+  position: absolute;
+  top: min(100vh, 920px);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.34;
+  mix-blend-mode: screen;
+  mask-image:
+    linear-gradient(to bottom, transparent 0, black 220px, black calc(100% - 260px), transparent 100%),
+    radial-gradient(ellipse at 50% 18%, black, transparent 72%);
+  mask-composite: intersect;
+}
+
+.post-hero-grainient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 52% 4%, rgba(0, 0, 0, 0.58), transparent 32rem),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.18) 38%, rgba(0, 0, 0, 0.72));
+}
+
+.post-hero-grainient .grainient-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+body[data-theme="light"] .post-hero-grainient {
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+}
+
+body[data-theme="light"] .post-hero-grainient::after {
+  background:
+    radial-gradient(ellipse at 52% 4%, rgba(255, 255, 255, 0.72), transparent 32rem),
+    linear-gradient(180deg, rgba(245, 245, 247, 0.7), rgba(245, 245, 247, 0.24) 40%, rgba(245, 245, 247, 0.76));
+}
+
 .portfolio-section {
   position: relative;
+  z-index: 1;
   width: min(100% - 48px, 1700px);
   margin: 0 auto;
   padding: clamp(110px, 9vw, 170px) 0;

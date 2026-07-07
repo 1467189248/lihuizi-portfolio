@@ -2,6 +2,7 @@
 
 import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import Grainient from "../components/Grainient";
 import { Hero } from "../components/Hero";
 import { InteractiveTitle } from "../components/InteractiveTitle";
 import { Navigation } from "../components/Navigation";
@@ -265,6 +266,29 @@ export default function App() {
           y={heroY}
           onPointerLeave={resetParallax}
         />
+        <div className="post-hero-grainient" aria-hidden="true">
+          <Grainient
+            color1={theme === "light" ? "#ffffff" : "#dce5ff"}
+            color2={theme === "light" ? "#cfd7ea" : "#425a9f"}
+            color3={theme === "light" ? "#f5f5f7" : "#05060a"}
+            timeSpeed={0.16}
+            colorBalance={theme === "light" ? 0.18 : -0.18}
+            warpStrength={0.42}
+            warpFrequency={3.4}
+            warpSpeed={0.55}
+            warpAmplitude={82}
+            blendAngle={-14}
+            blendSoftness={0.22}
+            rotationAmount={180}
+            noiseScale={1.35}
+            grainAmount={theme === "light" ? 0.028 : 0.052}
+            grainScale={2.4}
+            contrast={theme === "light" ? 1.05 : 1.14}
+            saturation={theme === "light" ? 0.34 : 0.58}
+            centerY={-0.12}
+            zoom={1.04}
+          />
+        </div>
         <ExperienceSection />
         <SelectedWorks />
         <StrengthsSection />
