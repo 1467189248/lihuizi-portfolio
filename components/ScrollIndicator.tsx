@@ -2,10 +2,10 @@
 
 const indicatorItems = [
   ["封面", "#top"],
-  ["切片", "#work"],
-  ["关于", "#about"],
+  ["切片", "#archive"],
+  ["经历", "#experience"],
   ["作品", "#works"],
-  ["流程", "#workflow"],
+  ["优势", "#strengths"],
   ["联系", "#contact"]
 ];
 

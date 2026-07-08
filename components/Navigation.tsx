@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ExploreTrigger } from "./navigation/ExploreTrigger";
 
 const navItems = [
   ["Home", "#top"],
@@ -11,11 +12,15 @@ const navItems = [
 ];
 
 type NavigationProps = {
-  theme: "dark" | "light";
-  onToggleTheme: () => void;
+  theme?: "dark" | "light";
+  onToggleTheme?: () => void;
 };
 
-export function Navigation({ theme, onToggleTheme }: NavigationProps) {
+export function Navigation(_props: NavigationProps = {}) {
+  const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
+  const isExplorePage = currentPath === "/explore";
+  const isWorksPage = currentPath === "/works";
+
   return (
     <motion.header
       className="site-header"
@@ -23,23 +28,22 @@ export function Navigation({ theme, onToggleTheme }: NavigationProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.8, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
     >
-      <nav className="nav" aria-label="主导航">
-        <a className="brand" href="#top">LiHuizi</a>
+      <nav className="nav" aria-label="Main navigation">
+        <a className="brand" href={isExplorePage ? "/#top" : "#top"}>
+          LiHuizi
+        </a>
         <div className="nav-links">
           {navItems.map(([label, href]) => (
-            <a href={href} key={href}>{label}</a>
+            <a
+              className={(!isExplorePage && !isWorksPage && label === "Home") || (isWorksPage && label === "Works") ? "active" : ""}
+              href={isExplorePage || isWorksPage ? `/${href}` : href}
+              key={href}
+            >
+              {label}
+            </a>
           ))}
         </div>
-        <button
-          className="theme-toggle"
-          type="button"
-          aria-label="切换白天和黑夜模式"
-          aria-pressed={theme === "light"}
-          onClick={onToggleTheme}
-        >
-          <span className="theme-icon sun" />
-          <span className="theme-icon moon" />
-        </button>
+        <ExploreTrigger />
       </nav>
     </motion.header>
   );
