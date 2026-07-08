@@ -6517,7 +6517,7 @@ body[data-theme="light"] .experience-keywords span {
 
 /* Hero type scale and information rhythm refinement */
 .hero-title-wrap {
-  width: min(100% - 56px, 1280px);
+  width: min(100% - 56px, 1400px);
   margin-right: auto;
   margin-left: auto;
   text-align: center;
@@ -6525,13 +6525,13 @@ body[data-theme="light"] .experience-keywords span {
 
 .hero-title {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1400px;
   margin-right: auto;
   margin-left: auto;
   text-align: center;
-  font-size: clamp(76px, 8.9vw, 164px);
-  line-height: 0.92;
-  letter-spacing: -0.085em;
+  font-size: clamp(58px, 6.35vw, 118px);
+  line-height: 0.98;
+  letter-spacing: -0.062em;
   white-space: nowrap;
 }
 
