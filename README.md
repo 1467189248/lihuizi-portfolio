@@ -1,6 +1,6 @@
 # LiHuizi Portfolio
 
-Dark, restrained personal portfolio for LiHuizi, built with React, Vite, TypeScript, and Framer Motion.
+Personal Portfolio Website.
 
 ## Run locally
 
