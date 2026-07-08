@@ -2,17 +2,42 @@
 
 import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import Grainient from "../components/Grainient";
+import BorderGlow from "../components/BorderGlow";
+import ColorBends from "../components/ColorBends";
+import { DesignArchiveMarquee } from "../components/DesignArchiveMarquee";
+import { ExplorePage } from "./ExplorePage";
 import { Hero } from "../components/Hero";
 import { InteractiveTitle } from "../components/InteractiveTitle";
 import { Navigation } from "../components/Navigation";
+import { ScrollIndicator } from "../components/ScrollIndicator";
 import { featuredProject, projects } from "../data/projects";
+import { WorksPage } from "./WorksPage";
 
-const stats = [
-  ["18+", "产品与视觉项目"],
-  ["6", "重点行业方向"],
-  ["4", "从策略到交付阶段"],
-  ["2026", "Portfolio System"]
+const processModules = [
+  {
+    index: "01",
+    title: "产品策略",
+    text: "从需求、用户、场景与竞品中定义设计方向",
+    points: ["用户研究 / 竞品分析 / 产品定位", "功能优先级 / 设计机会 / 需求转译"]
+  },
+  {
+    index: "02",
+    title: "形态设计",
+    text: "把策略判断转译为稳定、可识别、可制造的产品语言",
+    points: ["比例推敲 / 体块关系 / 人因握持", "结构边界 / CMF 方向 / 造型迭代"]
+  },
+  {
+    index: "03",
+    title: "视觉表达",
+    text: "用渲染、场景与叙事让产品价值被快速理解",
+    points: ["产品渲染 / 场景构建 / 细节表现", "AIGC 工作流 / 提案表达 / 视觉资产"]
+  },
+  {
+    index: "04",
+    title: "项目落地",
+    text: "协调目标、团队与交付节奏，让方案进入真实执行",
+    points: ["跨部门协同 / 评审推进 / 交付管理", "客户沟通 / 方案落地 / 团队管理"]
+  }
 ];
 
 const strengths = [
@@ -42,6 +67,8 @@ const strengths = [
   }
 ];
 
+const workFilters = ["Rendering", "AIGC", "3C Visual", "Motion", "Commercial"];
+
 const reveal = {
   hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
   show: {
@@ -52,46 +79,101 @@ const reveal = {
   }
 };
 
+function DesignArchiveSection() {
+  return (
+    <motion.section
+      className="visual-archive"
+      id="archive"
+      variants={reveal}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.18 }}
+    >
+      <div className="archive-head">
+        <div>
+          <div className="eyebrow">Design Archive</div>
+          <InteractiveTitle as="h2">设计切片</InteractiveTitle>
+        </div>
+        <div className="archive-copy">
+          <p>从产品定义、AIGC 推演、工业设计到项目落地，记录设计判断形成过程中的关键切片。</p>
+        </div>
+      </div>
+
+      <BorderGlow
+        className="archive-stage portfolio-glow-card"
+        aria-label="横向流动视觉墙"
+        backgroundColor="rgba(12, 12, 14, 0.72)"
+        borderRadius={30}
+        edgeSensitivity={26}
+        glowRadius={46}
+        glowIntensity={0.55}
+        coneSpread={18}
+        fillOpacity={0.16}
+      >
+        <div className="archive-glow" />
+        <DesignArchiveMarquee />
+      </BorderGlow>
+    </motion.section>
+  );
+}
+
 function ExperienceSection() {
   return (
     <motion.section className="experience-section portfolio-section" id="experience" variants={reveal} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.22 }}>
       <div className="section-kicker">Experience / Profile</div>
       <div className="experience-grid">
-        <div className="portrait-card" aria-label="LiHuizi portrait">
+        <BorderGlow
+          className="portrait-card portfolio-glow-card"
+          aria-label="LiHuizi portrait"
+          backgroundColor="rgba(16, 16, 18, 0.72)"
+          borderRadius={34}
+          edgeSensitivity={32}
+          glowRadius={34}
+          glowIntensity={0.48}
+          fillOpacity={0.12}
+        >
           <div className="portrait-orbit" />
-          <div className="portrait-figure">
-            <span className="portrait-head" />
-            <span className="portrait-body" />
+          <div className="portrait-figure portrait-photo-frame">
+            <img src="/images/profile-lihuizi.png" alt="LiHuizi" loading="lazy" />
           </div>
           <div className="portrait-meta">
             <span>Industrial Product Designer</span>
             <strong>LiHuizi</strong>
           </div>
-        </div>
+        </BorderGlow>
 
         <div className="experience-copy">
-          <InteractiveTitle as="h2">产品审美、策略判断与项目落地的连续工作流。</InteractiveTitle>
-          <p>
-            我是一名工业产品设计师，也是一名正在承担产品设计部门管理职责的设计负责人。
-            我关注产品从需求定义、用户研究、形态策略、结构协同到最终交付的完整链路。
-          </p>
-          <p>
-            相比只展示最终效果，我更重视设计背后的判断：为什么这样定义问题，
-            为什么这样处理比例、材料、交互和场景，以及如何让一个方案真正被客户理解、被团队执行、被市场接受。
-          </p>
+          <InteractiveTitle as="h2" className="experience-title" dataText="从策略到落地，构建产品设计价值闭环">
+            <span>从策略到落地，</span>
+            <span>构建产品设计价值闭环</span>
+          </InteractiveTitle>
+          <p>聚焦产品策略、工业设计、AI辅助设计流程与结构协同，推动复杂项目从需求判断到可执行交付。</p>
+          <div className="experience-keywords" aria-label="核心能力关键词">
+            {["Product Strategy", "Industrial Design", "AI Workflow", "Structure Collaboration", "Project Delivery", "Design Management"].map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
           <div className="experience-contact">
             <a href="mailto:kiki1467189248@gmail.com">kiki1467189248@gmail.com</a>
-            <a href="#contact">合作沟通</a>
+            <a href="#works">个人作品</a>
           </div>
         </div>
       </div>
 
-      <div className="stats-strip">
-        {stats.map(([value, label]) => (
-          <div key={label}>
-            <strong>{value}</strong>
-            <span>{label}</span>
-          </div>
+      <div className="stats-strip process-strip">
+        {processModules.map((item) => (
+          <article key={item.index}>
+            <h3>
+              <span>{item.index} /</span>
+              {item.title}
+            </h3>
+            <p>{item.text}</p>
+            <ul>
+              {item.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          </article>
         ))}
       </div>
     </motion.section>
@@ -108,29 +190,47 @@ function SelectedWorks() {
           <div className="section-kicker">Selected Works</div>
           <InteractiveTitle as="h2">精选项目</InteractiveTitle>
         </div>
-        <p>用大图建立产品记忆，用克制的信息层解释项目方向。</p>
       </div>
 
-      <div className="feature-work-card">
-        <a href="#contact" className="view-link">View ↗</a>
-        <div className="work-visual-large" aria-hidden="true">
-          <span className="device-block" />
-          <span className="device-lens one" />
-          <span className="device-lens two" />
-          <span className="device-lens three" />
+      <div className="work-filter-tabs" aria-label="作品分类">
+        {workFilters.map((filter, index) => (
+          <button className={index === 0 ? "active" : ""} type="button" key={filter}>
+            {filter}
+          </button>
+        ))}
+      </div>
+
+      <BorderGlow
+        className="feature-work-card portfolio-glow-card"
+        backgroundColor="rgba(12, 12, 14, 0.76)"
+        borderRadius={30}
+        edgeSensitivity={28}
+        glowRadius={42}
+        glowIntensity={0.58}
+        fillOpacity={0.14}
+        animated
+      >
+        <a href="/works" className="view-link">View ↗</a>
+        <div className="work-visual-large work-collection-visual" aria-hidden="true">
+          <img src="/images/work-collection-yanzhi-nezha.png" alt="" loading="lazy" />
         </div>
         <div className="work-copy">
-          <div className="work-tags">
-            {featuredProject.tags.map((tag) => <span key={tag}>{tag}</span>)}
-          </div>
-          <h3>{featuredProject.title}</h3>
-          <p>{featuredProject.subtitle}</p>
+          <h3>作品合集</h3>
         </div>
-      </div>
+      </BorderGlow>
 
       <div className="work-grid-large">
         {cards.slice(1).map((project, index) => (
-          <article className="portfolio-work-card" key={project.slug}>
+          <BorderGlow
+            className="portfolio-work-card portfolio-glow-card"
+            key={project.slug}
+            backgroundColor="rgba(12, 12, 14, 0.76)"
+            borderRadius={24}
+            edgeSensitivity={34}
+            glowRadius={30}
+            glowIntensity={0.42}
+            fillOpacity={0.1}
+          >
             <a href="#contact" className="view-link small">View ↗</a>
             <div className={`project-visual visual-${index + 1}`} aria-hidden="true">
               <span />
@@ -140,7 +240,7 @@ function SelectedWorks() {
               <h3>{project.title}</h3>
               <p>{project.subtitle}</p>
             </div>
-          </article>
+          </BorderGlow>
         ))}
       </div>
     </motion.section>
@@ -160,11 +260,20 @@ function StrengthsSection() {
 
       <div className="strength-card-grid">
         {strengths.map((item, index) => (
-          <article className="strength-card" key={item.title}>
+          <BorderGlow
+            className="strength-card portfolio-glow-card"
+            key={item.title}
+            backgroundColor="rgba(16, 16, 18, 0.7)"
+            borderRadius={26}
+            edgeSensitivity={34}
+            glowRadius={28}
+            glowIntensity={0.42}
+            fillOpacity={0.12}
+          >
             <span>{String(index + 1).padStart(2, "0")}</span>
             <h3>{item.title}</h3>
             <p>{item.text}</p>
-          </article>
+          </BorderGlow>
         ))}
       </div>
     </motion.section>
@@ -174,7 +283,15 @@ function StrengthsSection() {
 function FinalContact() {
   return (
     <section className="final-contact" id="contact">
-      <div className="contact-shell">
+      <BorderGlow
+        className="contact-shell portfolio-glow-card"
+        backgroundColor="rgba(16, 16, 18, 0.74)"
+        borderRadius={38}
+        edgeSensitivity={28}
+        glowRadius={48}
+        glowIntensity={0.5}
+        fillOpacity={0.12}
+      >
         <div className="section-kicker">Contact</div>
         <InteractiveTitle as="h2">Let’s build meaningful products.</InteractiveTitle>
         <p>项目合作、设计交流或作品浏览，下面是最直接的入口。</p>
@@ -187,19 +304,23 @@ function FinalContact() {
             <span>Portfolio</span>
             <strong>查看精选项目</strong>
           </a>
-          <a href="#top">
-            <span>Back</span>
-            <strong>回到封面</strong>
-          </a>
         </div>
-      </div>
+        <a className="contact-back-top" href="#top">BACK TO TOP</a>
+      </BorderGlow>
+      <footer className="site-footer">
+        <span>©LiHuizi</span>
+        <span>JUSTDOIT FORFUTURE</span>
+      </footer>
     </section>
   );
 }
 
 export default function App() {
+  const isExplorePage = typeof window !== "undefined" && window.location.pathname === "/explore";
+  const isWorksPage = typeof window !== "undefined" && window.location.pathname === "/works";
   const heroRef = useRef<HTMLElement | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [activeSection, setActiveSection] = useState(0);
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const pointer = useMotionValue(0.5);
@@ -222,6 +343,28 @@ export default function App() {
       setTheme("light");
       document.body.dataset.theme = "light";
     }
+  }, []);
+
+  useEffect(() => {
+    const sectionIds = ["top", "archive", "experience", "works", "strengths", "contact"];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        const index = sectionIds.indexOf(visible.target.id);
+        if (index >= 0) setActiveSection(index);
+      },
+      { rootMargin: "-38% 0px -42% 0px", threshold: [0.08, 0.2, 0.42, 0.64] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -252,6 +395,14 @@ export default function App() {
     pointer.set(0.5);
   };
 
+  if (isExplorePage) {
+    return <ExplorePage />;
+  }
+
+  if (isWorksPage) {
+    return <WorksPage />;
+  }
+
   return (
     <>
       <Navigation theme={theme} onToggleTheme={toggleTheme} />
@@ -266,34 +417,31 @@ export default function App() {
           y={heroY}
           onPointerLeave={resetParallax}
         />
-        <div className="post-hero-grainient" aria-hidden="true">
-          <Grainient
-            color1={theme === "light" ? "#ffffff" : "#dce5ff"}
-            color2={theme === "light" ? "#cfd7ea" : "#425a9f"}
-            color3={theme === "light" ? "#f5f5f7" : "#05060a"}
-            timeSpeed={0.16}
-            colorBalance={theme === "light" ? 0.18 : -0.18}
+        <div className="post-hero-colorbends" aria-hidden="true">
+          <ColorBends
+            colors={theme === "light" ? ["#ffffff", "#cfd7ea", "#dde5ff"] : ["#dce5ff", "#40549a", "#11131b"]}
+            rotation={84}
+            autoRotate={0.35}
+            speed={0.12}
+            scale={1.18}
+            frequency={1.06}
             warpStrength={0.42}
-            warpFrequency={3.4}
-            warpSpeed={0.55}
-            warpAmplitude={82}
-            blendAngle={-14}
-            blendSoftness={0.22}
-            rotationAmount={180}
-            noiseScale={1.35}
-            grainAmount={theme === "light" ? 0.028 : 0.052}
-            grainScale={2.4}
-            contrast={theme === "light" ? 1.05 : 1.14}
-            saturation={theme === "light" ? 0.34 : 0.58}
-            centerY={-0.12}
-            zoom={1.04}
+            mouseInfluence={0.34}
+            parallax={0.22}
+            noise={theme === "light" ? 0.035 : 0.065}
+            iterations={2}
+            intensity={theme === "light" ? 0.82 : 1.12}
+            bandWidth={theme === "light" ? 4.4 : 5.2}
+            transparent
           />
         </div>
+        <DesignArchiveSection />
         <ExperienceSection />
         <SelectedWorks />
         <StrengthsSection />
         <FinalContact />
       </main>
+      <ScrollIndicator active={activeSection} />
       <motion.div className="cursor-dot" aria-hidden="true" style={{ x: cursorX, y: cursorY }} />
     </>
   );
